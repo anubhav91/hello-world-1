@@ -1,0 +1,23 @@
+name: Deploy via FTP
+
+on:
+  push:
+    branches:
+      - production  # Runs when code is pushed to 'production' branch
+
+jobs:
+  ftp-deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy via FTP
+        uses: samkirkland/ftp-deploy-action@v4.3.1
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /public_html/hello_world_1/
